@@ -24,7 +24,8 @@ print("")
 # ip address finder
 try:
     hostname = socket.gethostname()
-    ipv4_address = socket.gethostbyname(hostname)
+    addr_info = socket.getaddrinfo(hostname, None)
+    ipv4_address = next(info[4][0] for info in addr_info if info[1] == socket.AF_INET)
     print(f"Internal IPv4 Address for {hostname}: {ipv4_address}")
 except socket.gaierror:
     print("There was an error resolving the hostname.")
