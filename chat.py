@@ -12,10 +12,17 @@ from rsa.key import PublicKey
 server_ip = ""
 name = ""
 partner_name = ""
-
+ip_gotten = ""
 # keys
 public_key, private_key = rsa.newkeys(1024)
 public_partner = None
+
+# functions
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+ip_gotten = str(s.getsockname()[0])
+s.close()
 
 # main code
 print("*** chat.py - a simple encrypted chat program ***")
@@ -24,7 +31,7 @@ print("")
 # ip address finder
 try:
     hostname = socket.gethostname()
-    ipv4_address = socket.gethostbyname(hostname)
+    ipv4_address = ip_gotten
     print(f"Internal IPv4 Address for {hostname}: {ipv4_address}")
 except socket.gaierror:
     print("There was an error resolving the hostname.")
