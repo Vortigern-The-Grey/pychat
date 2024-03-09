@@ -52,24 +52,26 @@ if mode == 1:
     server.bind((str(ipv4_address), 9999))
     server.listen()
 
+    print("Waiting for connection...")
     client, _ = server.accept()
 
-    print("Waiting for connection...")
     client.send(str(name).encode())
     partner_name = client.recv(1024).decode()
     client.send(public_key.save_pkcs1("PEM"))
     public_partner = rsa.PublicKey.load_pkcs1(client.recv(1024))
-    print("Client Connected!")
+    print(f"{partner_name} just connected!")
 elif mode == 2:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_ip = input("Please enter the IP address of the hoster: ")
-    client.connect((server_ip, 9999))
+    
+    print(f"Connecting to {server_ip}...")
 
+    client.connect((server_ip, 9999))
     partner_name = client.recv(1024).decode()
     client.send(str(name).encode())
     public_partner = rsa.PublicKey.load_pkcs1(client.recv(1024))
     client.send(public_key.save_pkcs1("PEM"))
-
+    print(f"Sucessfully connected to {partner_name}")
 else:
     exit()
 
