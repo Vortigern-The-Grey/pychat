@@ -63,7 +63,7 @@ if mode == 1:
 elif mode == 2:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_ip = input("Please enter the IP address of the hoster: ")
-    
+
     print(f"Connecting to {server_ip}...")
 
     client.connect((server_ip, 9999))
@@ -80,12 +80,28 @@ def sending_messages(c):
     while True:
         message = input("")
         c.send(rsa.encrypt(message.encode(), pub_key=public_partner))
+        if message.lower() == "/quit":
+            print("Chat program terminated.")
+            break
 
 
 def receiving_messages(c):
     while True:
-        print(f"{partner_name}: " + rsa.decrypt(c.recv(1024), priv_key=private_key).decode())
+        received_message = rsa.decrypt(c.recv(1024), priv_key=private_key).decode()
+        print(f"{partner_name}: {received_message}")
+        if received_message.lower() == "/quit":
+            print(f"Chat program terminated by {partner_name}.")
+            break
 
 
-threading.Thread(target=sending_messages, args=(client,)).start()
-threading.Thread(target=receiving_messages, args=(client,)).start()
+sending_thread = threading.Thread(target=sending_messages, args=(client,))
+receiving_thread = threading.Thread(target=receiving_messages, args=(client,))
+
+sending_thread.start()
+receiving_thread.start()
+
+# close threads
+sending_thread.join()
+receiving_thread.join()
+print("All threads terminated. Chat program closed.")
+quit()
