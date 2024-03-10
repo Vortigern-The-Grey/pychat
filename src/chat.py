@@ -16,8 +16,6 @@ ip_gotten = ""
 public_key, private_key = rsa.newkeys(1024)
 public_partner = None
 
-# functions
-
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
 ip_gotten = str(s.getsockname()[0])
@@ -29,6 +27,10 @@ print("")
 
 # ip address finder
 try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    ip_gotten = str(s.getsockname()[0])
+    s.close()
     hostname = socket.gethostname()
     ipv4_address = ip_gotten
     print(f"Internal IPv4 Address for {hostname}: {ipv4_address}")
