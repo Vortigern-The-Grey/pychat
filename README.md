@@ -9,7 +9,7 @@ Pychat is a simple, terminal based E2E 1-on-1 chat app made after following a Ne
 * Currently only works on local networks, this is a WIP
 
 ## Installation
-You can either clone the repository or download the script: [chat.py](/chat).
+You can either clone the repository or download the script: [chat.py](/chat.py).
 
 ### Clone the repository
 ```
