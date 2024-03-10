@@ -6,7 +6,6 @@ import threading
 
 # external modules
 import rsa
-from rsa.key import PublicKey
 
 # define variables
 server_ip = ""
