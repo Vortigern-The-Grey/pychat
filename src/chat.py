@@ -3,7 +3,7 @@
 # import modules
 import socket
 import threading
-from requests import get
+
 # external modules
 import rsa
 
@@ -12,7 +12,6 @@ server_ip = ""
 name = ""
 partner_name = ""
 ip_local = ""
-ip_public = get('https://api.ipify.org').text
 ip_mode = 0
 
 # keys
@@ -31,7 +30,6 @@ try:
     s.close()
     hostname = socket.gethostname()
     print(f"Internal IPv4 Address for {hostname}: {ip_local}")
-    print(f"Public IPv4 Address for {hostname}: {ip_public}")
 except socket.gaierror:
     print("There was an error resolving the hostname.")
 except Exception as e:
