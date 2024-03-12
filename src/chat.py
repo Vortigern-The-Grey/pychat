@@ -3,7 +3,7 @@
 # import modules
 import socket
 import threading
-
+from requests import get
 # external modules
 import rsa
 
@@ -11,15 +11,13 @@ import rsa
 server_ip = ""
 name = ""
 partner_name = ""
-ip_gotten = ""
+ip_local = ""
+ip_public = get('https://api.ipify.org').text
+ip_mode = 0
+
 # keys
 public_key, private_key = rsa.newkeys(1024)
 public_partner = None
-
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-ip_gotten = str(s.getsockname()[0])
-s.close()
 
 # main code
 print("*** chat.py - a simple encrypted chat program ***")
@@ -29,18 +27,18 @@ print("")
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
-    ip_gotten = str(s.getsockname()[0])
+    ip_local = str(s.getsockname()[0])
     s.close()
     hostname = socket.gethostname()
-    ipv4_address = ip_gotten
-    print(f"Internal IPv4 Address for {hostname}: {ipv4_address}")
+    print(f"Internal IPv4 Address for {hostname}: {ip_local}")
+    print(f"Public IPv4 Address for {hostname}: {ip_public}")
 except socket.gaierror:
     print("There was an error resolving the hostname.")
 except Exception as e:
     print(f"An unexpected error occurred: {e}")
 
 name = input("Enter display name:")
-
+ipv4_address = ip_local
 print("")
 print("[1] Host a server")
 print("[2] Connect to a server")
