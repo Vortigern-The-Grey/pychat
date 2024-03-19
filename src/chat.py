@@ -3,6 +3,7 @@
 # import modules
 import socket
 import threading
+from datetime import date, datetime, time
 
 # external modules
 import rsa
@@ -20,6 +21,8 @@ public_partner = None
 
 # main code
 print("*** chat.py - a simple encrypted chat program ***")
+print(f"Date: {date}")
+print(f"Time: {time}")
 print("")
 
 # ip address finder
