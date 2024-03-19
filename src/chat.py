@@ -85,7 +85,7 @@ def sending_messages(c):
 def receiving_messages(c):
     while True:
         received_message = rsa.decrypt(c.recv(1024), priv_key=private_key).decode()
-        print(f"{partner_name}: {received_message}")
+        print(f"{str(datetime)} {partner_name}: {received_message}")
         if received_message.lower() == "/quit":
             print(f"Chat program terminated by {partner_name}.")
             break
